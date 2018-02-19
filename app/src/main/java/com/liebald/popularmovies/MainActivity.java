@@ -1,5 +1,6 @@
 package com.liebald.popularmovies;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -9,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.liebald.popularmovies.Loader.MoviePreviewAsyncTaskLoader;
 import com.liebald.popularmovies.model.MoviePreview;
@@ -60,7 +60,10 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
 
     @Override
     public void onGridItemClick(int clickedItemIndex) {
-        Toast.makeText(this, "Clicked " + clickedItemIndex, Toast.LENGTH_SHORT).show();
+        MoviePreview moviePreview = mAdapter.getItem(clickedItemIndex);
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("moviePreview", moviePreview);
+        startActivity(intent);
 
     }
 

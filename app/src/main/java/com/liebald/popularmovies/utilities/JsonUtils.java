@@ -19,6 +19,10 @@ public class JsonUtils {
 
     private static final String RESULTS_KEY = "results";
     private static final String POSTER_PATH_KEY = "poster_path";
+    private static final String TITLE_KEY = "title";
+    private static final String OVERVIEW_KEY = "overview";
+    private static final String VOTE_AVERAGE_KEY = "vote_average";
+    private static final String RELEASE_DATE_KEY = "release_date";
 
     /**
      * Parses a json String containing multiple movie Previews into a {@link List} of {@link MoviePreview}s.
@@ -57,6 +61,10 @@ public class JsonUtils {
             MoviePreview moviePreview = new MoviePreview();
             JSONObject jsonMoviePreview = new JSONObject(json);
             moviePreview.setPosterPath(jsonMoviePreview.getString(POSTER_PATH_KEY));
+            moviePreview.setTitle(jsonMoviePreview.getString(TITLE_KEY));
+            moviePreview.setOverview(jsonMoviePreview.getString(OVERVIEW_KEY));
+            moviePreview.setVote_average(jsonMoviePreview.getString(VOTE_AVERAGE_KEY));
+            moviePreview.setRelease_date(jsonMoviePreview.getString(RELEASE_DATE_KEY));
 //            Log.d(TAG, moviePreview.getPosterPath());
             return moviePreview;
         } catch (JSONException exception) {

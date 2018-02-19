@@ -30,6 +30,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
     private final GridItemClickListener mGridItemClickListener;
     private final Context mContext;
     private List<MoviePreview> moviePreviews;
+
     /**
      * Constructor. Takes a {@link GridItemClickListener} that will be called on clicks on
      * items managed by the adapter.
@@ -84,6 +85,18 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
     void swapItems(List<MoviePreview> moviePreviews) {
         this.moviePreviews = moviePreviews;
         notifyDataSetChanged();
+    }
+
+    /**
+     * Returns the item of the managed List on the specified index.
+     *
+     * @param index Index to retrieve.
+     * @return The {@link MoviePreview} at the specified Index. Null if index doesn't exist.
+     */
+    public MoviePreview getItem(int index) {
+        if (moviePreviews.size() <= index)
+            return null;
+        return moviePreviews.get(index);
     }
 
     /**
