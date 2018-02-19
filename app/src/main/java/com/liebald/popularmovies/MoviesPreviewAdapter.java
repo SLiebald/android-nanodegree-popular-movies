@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.NetworkUtils;
@@ -22,25 +21,15 @@ import java.util.List;
  * Adapter for the Previews of popular movies.
  */
 public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdapter.PreviewViewHolder> {
-    private static String TAG = MoviesPreviewAdapter.class.getSimpleName();
+    private static final String TAG = MoviesPreviewAdapter.class.getSimpleName();
 
     /**
      * The {@link GridItemClickListener} that will be called in order to handle onClick events
      * on items managed by this class.
      */
     private final GridItemClickListener mGridItemClickListener;
-
-    /**
-     * Classes implementing this Interface can be called in order to handle onClick events
-     * on items managed by {@link MoviesPreviewAdapter}.
-     */
-    public interface GridItemClickListener {
-        void onGridItemClick(int clickedItemIndex);
-    }
-
-    private List<MoviePreview> moviePreviews;
     private final Context mContext;
-
+    private List<MoviePreview> moviePreviews;
     /**
      * Constructor. Takes a {@link GridItemClickListener} that will be called on clicks on
      * items managed by the adapter.
@@ -75,7 +64,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
 
             @Override
             public void onError() {
-                Log.e(TAG,"Could not load image");
+                Log.e(TAG, "Could not load image");
                 holder.progressBar.setVisibility(View.GONE);
             }
         });
@@ -98,14 +87,22 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
     }
 
     /**
+     * Classes implementing this Interface can be called in order to handle onClick events
+     * on items managed by {@link MoviesPreviewAdapter}.
+     */
+    public interface GridItemClickListener {
+        void onGridItemClick(int clickedItemIndex);
+    }
+
+    /**
      * Internal class for the ViewHolder
      */
     class PreviewViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
         // The ImageView for the Thumbnail we want to show.
-        ImageView imagePreview;
-        ProgressBar progressBar;
+        final ImageView imagePreview;
+        final ProgressBar progressBar;
 
         /**
          * Constructor for {@link PreviewViewHolder}. Sets an onClick listener for the according view.
@@ -120,7 +117,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
         }
 
         /**
-         * Called when a click on a Previewimage in the RecyclerView occurs.
+         * Called when a click on a Preview image in the RecyclerView occurs.
          *
          * @param view The View that was clicked.
          */

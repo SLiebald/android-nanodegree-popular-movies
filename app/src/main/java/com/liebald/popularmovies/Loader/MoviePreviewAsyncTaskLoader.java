@@ -31,8 +31,7 @@ public class MoviePreviewAsyncTaskLoader extends AsyncTaskLoader<List<MoviePrevi
     public List<MoviePreview> loadInBackground() {
         try {
             String jsonMoviePreviews = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.getUrl(NetworkUtils.SortBy.popularity));
-            List<MoviePreview> previews = JsonUtils.parseMoviePreviews(jsonMoviePreviews);
-            return previews;
+            return JsonUtils.parseMoviePreviews(jsonMoviePreviews);
         } catch (IOException e) {
             Log.e(TAG, "Error loading from URL: " + e.getMessage());
             e.printStackTrace();

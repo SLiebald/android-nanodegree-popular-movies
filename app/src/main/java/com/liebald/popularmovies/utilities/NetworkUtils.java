@@ -15,45 +15,32 @@ import java.net.URL;
 import java.util.Scanner;
 
 /**
- * Utilityclass for querying the network
+ * Utility class for querying the network
  */
 // Based on the NetworkUtils for Project Sunshine.
 public class NetworkUtils {
 
 
-    /**
-     * Enum with possible parameters to sort the result by.
-     */
-    public enum SortBy {
-        popularity,
-        vote_average
-    }
-
-    private static String TAG = NetworkUtils.class.getSimpleName();
-
+    private static final String TAG = NetworkUtils.class.getSimpleName();
     /**
      * Base Url for searching movies on themoviedb.org.
      */
     private static final String MOVIE_PREVIEW_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
-
     /**
      * Base Url for images from tmdb.
      */
     private static final String MOVIE_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
-
     /**
      * Query parameter for the api key.
      */
     private static final String API_KEY_PARAM = "api_key";
-
     /**
      * Query parameter for sorting.
      */
     private static final String SORT_PARAM = "sort_by";
 
-
     /**
-     * Create the query URL for retrieving the JSON data for moviepreviews.
+     * Create the query URL for retrieving the JSON data for movie previews.
      * Input defines on how to sort the query.
      *
      * @param sortBy {@link SortBy} defining the way the result should be sorted
@@ -106,14 +93,21 @@ public class NetworkUtils {
      * Returns the complete Path for the given relative poster path.
      *
      * @param posterPath The relative path.
-     * @return The {@link Uri} that points to the according image ressource.
+     * @return The {@link Uri} that points to the according image resource.
      */
     public static Uri getThumbnailURL(String posterPath) {
-        Uri uri = Uri.parse(MOVIE_IMAGE_BASE_URL).buildUpon()
+        return Uri.parse(MOVIE_IMAGE_BASE_URL).buildUpon()
                 .appendPath("w342")
                 .appendEncodedPath(posterPath)
                 .build();
-        return uri;
+    }
+
+    /**
+     * Enum with possible parameters to sort the result by.
+     */
+    public enum SortBy {
+        popularity,
+        vote_average
     }
 
 

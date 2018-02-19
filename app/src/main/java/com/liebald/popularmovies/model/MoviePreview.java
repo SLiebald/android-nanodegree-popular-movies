@@ -2,7 +2,7 @@ package com.liebald.popularmovies.model;
 
 
 /**
- * Model for a movie Preview. Holds all relevant Values for a moview preview.
+ * Model for a movie Preview. Holds all relevant Values for a movie preview.
  */
 public class MoviePreview {
     /**

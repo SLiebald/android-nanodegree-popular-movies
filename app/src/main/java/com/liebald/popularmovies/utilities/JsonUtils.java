@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Helperclass for parsing json into {@link MoviePreview} objects.
+ * Helper class for parsing json into {@link MoviePreview} objects.
  */
 public class JsonUtils {
-    private static String TAG = JsonUtils.class.getSimpleName();
+    private static final String TAG = JsonUtils.class.getSimpleName();
 
     private static final String RESULTS_KEY = "results";
     private static final String POSTER_PATH_KEY = "poster_path";
@@ -32,7 +32,7 @@ public class JsonUtils {
 
             JSONObject jsonMoviePreviews = new JSONObject(json);
             JSONArray results = jsonMoviePreviews.getJSONArray(RESULTS_KEY);
-            for (String result : readListFromJsonArry(results)) {
+            for (String result : readListFromJsonArray(results)) {
 
                 MoviePreview preview = parseMoviePreview(result);
                 if (preview != null)
@@ -73,7 +73,7 @@ public class JsonUtils {
      * @return The parsed {@link List<String>}.
      * @throws JSONException Thrown if a parsing error occurs.
      */
-    private static List<String> readListFromJsonArry(JSONArray array) throws JSONException {
+    private static List<String> readListFromJsonArray(JSONArray array) throws JSONException {
         List<String> result = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             result.add(array.getString(i));
