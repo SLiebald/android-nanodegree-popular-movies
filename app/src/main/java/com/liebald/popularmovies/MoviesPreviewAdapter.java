@@ -56,19 +56,22 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
     public void onBindViewHolder(final PreviewViewHolder holder, int position) {
         MoviePreview moviePreview = moviePreviews.get(position);
         Uri uri = NetworkUtils.getThumbnailURL(moviePreview.getPosterPath());
-        Picasso.with(mContext).load(uri).into(holder.imagePreview, new com.squareup.picasso.Callback() {
-            @Override
-            public void onSuccess() {
-                holder.progressBar.setVisibility(View.GONE);
-                holder.imagePreview.setVisibility(View.VISIBLE);
-            }
+        Picasso.with(mContext)
+                .load(uri)
 
-            @Override
-            public void onError() {
-                Log.e(TAG, "Could not load image");
-                holder.progressBar.setVisibility(View.GONE);
-            }
-        });
+                .into(holder.imagePreview, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.progressBar.setVisibility(View.GONE);
+                        holder.imagePreview.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.e(TAG, "Could not load image");
+                        holder.progressBar.setVisibility(View.GONE);
+                    }
+                });
 
     }
 
