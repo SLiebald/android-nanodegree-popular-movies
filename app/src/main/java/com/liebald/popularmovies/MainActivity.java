@@ -1,6 +1,7 @@
 package com.liebald.popularmovies;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -45,7 +46,13 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         mPreviewList = findViewById(R.id.recycler_main);
         mProgressBar = findViewById(R.id.pb_loading);
         // set its LayoutManager to a gridLayoutManager
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+
+        int spanCount = 2;
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            spanCount = 4;
+        }
+
+        GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
         mPreviewList.setLayoutManager(layoutManager);
 
 
