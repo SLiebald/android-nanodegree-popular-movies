@@ -25,7 +25,7 @@ public class NetworkUtils {
     /**
      * Base Url for searching movies on themoviedb.org.
      */
-    private static final String MOVIE_PREVIEW_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
+    private static final String MOVIE_PREVIEW_BASE_URL = "https://api.themoviedb.org/3/movie";
     /**
      * Base Url for images from tmdb.
      */
@@ -34,28 +34,22 @@ public class NetworkUtils {
      * Query parameter for the api key.
      */
     private static final String API_KEY_PARAM = "api_key";
-    /**
-     * Query parameter for sorting.
-     */
-    private static final String SORT_PARAM = "sort_by";
+
 
     /**
      * Create the query URL for retrieving the JSON data for movie previews.
-     * Input defines on how to sort the query.
+     * Input defines on what kind of movies to query.
      *
-     * @param sortBy {@link SortBy} defining the way the result should be sorted
+     * @param requestType {@link requestType} defining what data should be requested (popular/top_rated)
      * @return The URL that queries for movies following the given parameters.
      */
 
-    public static URL getUrl(@NonNull SortBy sortBy) {
-        Uri moviePreviewUri = Uri.parse(MOVIE_PREVIEW_BASE_URL).buildUpon()
+    public static URL getUrl(@NonNull requestType requestType) {
+        Uri moviePreviewUri = Uri.parse(MOVIE_PREVIEW_BASE_URL).buildUpon().appendPath(requestType.name())
                 .appendQueryParameter(API_KEY_PARAM, BuildConfig.TMDB_API_KEY)
-                .appendQueryParameter(SORT_PARAM, sortBy.name() + ".desc")
                 .build();
         try {
-            URL moviePreviewUrl = new URL(moviePreviewUri.toString());
-            Log.v(TAG, "Querying for URL: " + moviePreviewUrl);
-            return moviePreviewUrl;
+            return new URL(moviePreviewUri.toString());
         } catch (MalformedURLException e) {
             Log.e(TAG, "Malformed URL from URI: " + moviePreviewUri);
             e.printStackTrace();
@@ -105,9 +99,9 @@ public class NetworkUtils {
     /**
      * Enum with possible parameters to sort the result by.
      */
-    public enum SortBy {
-        popularity,
-        vote_average
+    public enum requestType {
+        popular,
+        top_rated
     }
 
 

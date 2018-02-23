@@ -21,16 +21,19 @@ public class MoviePreviewAsyncTaskLoader extends AsyncTaskLoader<List<MoviePrevi
 
     private final static String TAG = MoviePreviewAsyncTaskLoader.class.getSimpleName();
 
+    private final NetworkUtils.requestType requestType;
 
-    public MoviePreviewAsyncTaskLoader(Activity activity) {
+    public MoviePreviewAsyncTaskLoader(Activity activity, String requestType) {
         super(activity);
         Log.i(TAG, "AsyncTaskLoader initialized");
+        this.requestType = NetworkUtils.requestType.valueOf(requestType);
     }
 
     @Override
     public List<MoviePreview> loadInBackground() {
         try {
-            String jsonMoviePreviews = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.getUrl(NetworkUtils.SortBy.popularity));
+            Log.d(TAG, requestType.name());
+            String jsonMoviePreviews = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.getUrl(requestType));
             return JsonUtils.parseMoviePreviews(jsonMoviePreviews);
         } catch (IOException e) {
             Log.e(TAG, "Error loading from URL: " + e.getMessage());

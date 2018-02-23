@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.NetworkUtils;
@@ -72,6 +73,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
                         holder.progressBar.setVisibility(View.GONE);
                     }
                 });
+        holder.tvTitle.setText(moviePreview.getTitle());
 
     }
 
@@ -96,7 +98,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
      * @param index Index to retrieve.
      * @return The {@link MoviePreview} at the specified Index. Null if index doesn't exist.
      */
-    public MoviePreview getItem(int index) {
+    MoviePreview getItem(int index) {
         if (moviePreviews.size() <= index)
             return null;
         return moviePreviews.get(index);
@@ -119,16 +121,18 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
         // The ImageView for the Thumbnail we want to show.
         final ImageView imagePreview;
         final ProgressBar progressBar;
+        final TextView tvTitle;
 
         /**
          * Constructor for {@link PreviewViewHolder}. Sets an onClick listener for the according view.
          *
          * @param itemView The inflated {@link View} of this {@link PreviewViewHolder}.
          */
-        public PreviewViewHolder(View itemView) {
+        PreviewViewHolder(View itemView) {
             super(itemView);
             imagePreview = itemView.findViewById(R.id.image_preview);
             progressBar = itemView.findViewById(R.id.pb_loading_image);
+            tvTitle = itemView.findViewById(R.id.tv_title);
             itemView.setOnClickListener(this);
         }
 

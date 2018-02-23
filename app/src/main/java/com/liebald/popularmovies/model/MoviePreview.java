@@ -106,7 +106,7 @@ public class MoviePreview implements Parcelable {
                 "posterPath='" + posterPath + '\'' +
                 ", title='" + title + '\'' +
                 ", overview='" + overview + '\'' +
-                ", vote_average='" + vote_average + '\'' +
+                ", top_rated='" + vote_average + '\'' +
                 ", release_date='" + release_date + '\'' +
                 '}';
     }

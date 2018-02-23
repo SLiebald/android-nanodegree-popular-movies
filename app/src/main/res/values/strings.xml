@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Popular Movies</string>
     <string name="loading_indicator">Loading image</string>
-    <string name="rating">Rating:</string>
-    <string name="release_date">Release Date:</string>
-    <string name="overview">Overview:</string>
+    <string name="rating_label">Rating:</string>
+    <string name="release_date_label">Release Date:</string>
+    <string name="overview_label">Overview:</string>
     <string name="contentDescriptionPoster">Official Movie Poster</string>
+    <string name="order_by_label">Order by:</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular">Popular</string>
 </resources>
