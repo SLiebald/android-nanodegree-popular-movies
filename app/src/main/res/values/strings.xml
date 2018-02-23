@@ -8,4 +8,8 @@
     <string name="order_by_label">Order by:</string>
     <string name="top_rated">Top Rated</string>
     <string name="popular">Popular</string>
+    <string name="tmdb_disclaimer">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+    <string name="menu_about">About</string>
+    <string name="tmdb_logo">TMDb logo</string>
+    <string name="detail_rating">%1$s/10</string>
 </resources>

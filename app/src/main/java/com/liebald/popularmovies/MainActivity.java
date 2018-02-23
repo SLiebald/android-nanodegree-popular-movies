@@ -23,21 +23,38 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MoviesPreviewAdapter.GridItemClickListener,
         LoaderManager.LoaderCallbacks<List<MoviePreview>> {
-    //TODO: Attribute TMDb:
-// You shall use the TMDb logo to identify your use of the TMDb APIs.
-// You shall place the following notice prominently on your application:
-// This product uses the TMDb API but is not endorsed or certified by TMDb."
-// Any use of the TMDb logo in your application shall be less prominent than
-// the logo or mark that primarily describes the application and your use of
-// the TMDb logo shall not imply any endorsement by TMDb.
+
+    /**
+     * Tag for Logging in this activity.
+     */
     private static final String TAG = MainActivity.class.getSimpleName();
+
+    /**
+     * The ID of the Loader used to request data over the network.
+     */
     private static final int ID_MOVIE_PREVIEW_LOADER = 42;
+
+    /**
+     * The Key for an Intent extra that specifies what exactly is requested.
+     */
     private static final String REQUEST_TYPE_KEY = "request_type";
+
+    /**
+     * The disabled {@link MenuItem} that is used to display the type of the currently requested
+     * Previews. E.g. Popular or Top rated.
+     */
+    private MenuItem menu_request_type;
+
     /**
      * The {@link RecyclerView} displaying the movie previews.
      */
     private RecyclerView mPreviewList;
+
+    /**
+     * The {@link ProgressBar} shown while loading the content via the loader.
+     */
     private ProgressBar mProgressBar;
+
     /**
      * The Adapter for managing the {@link RecyclerView} displaying the preview.
      */
@@ -52,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         mPreviewList = findViewById(R.id.recycler_main);
         mProgressBar = findViewById(R.id.pb_loading);
 
-
         // set its LayoutManager to a gridLayoutManager
 
         int spanCount = 2;
@@ -63,7 +79,6 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         //GridLayoutManager layoutManager = new GridLayoutManager(this, spanCount);
 
         mPreviewList.setLayoutManager(layoutManager);
-
 
         //setup the mAdapter
         mAdapter = new MoviesPreviewAdapter(this, this);
@@ -90,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+        menu_request_type = menu.findItem(R.id.menu_request_type);
+
         return true;
     }
 
@@ -103,10 +120,16 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         switch (item.getItemId()) {
             case R.id.menu_popular:
                 bundle.putString(REQUEST_TYPE_KEY, NetworkUtils.requestType.popular.name());
+                menu_request_type.setTitle(getString(R.string.popular));
                 break;
             case R.id.menu_top_rated:
                 bundle.putString(REQUEST_TYPE_KEY, NetworkUtils.requestType.top_rated.name());
+                menu_request_type.setTitle(getString(R.string.top_rated));
                 break;
+            case R.id.menu_attribution:
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -120,9 +143,7 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         mLoader.forceLoad();
         Log.i(TAG, "Started Loader");
         return mLoader;
-
     }
-
 
     @Override
     public void onLoadFinished(Loader<List<MoviePreview>> loader, List<MoviePreview> data) {

@@ -3,8 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_request_type"
+        android:enabled="false"
+        android:title="@string/popular"
+        app:showAsAction="ifRoom" />
+    <item
+        android:icon="@drawable/ic_sort_white_24dp"
         android:title="@string/order_by_label"
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/menu_popular"
@@ -14,4 +19,9 @@
                 android:title="@string/top_rated" />
         </menu>
     </item>
+    <item
+        android:id="@+id/menu_attribution"
+        android:title="@string/menu_about"
+        app:showAsAction="collapseActionView" />
+
 </menu>

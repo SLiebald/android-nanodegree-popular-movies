@@ -18,11 +18,23 @@ import java.util.List;
  */
 public class MoviePreviewAsyncTaskLoader extends AsyncTaskLoader<List<MoviePreview>> {
 
-
+    /**
+     * Tag for Logging in this activity.
+     */
     private final static String TAG = MoviePreviewAsyncTaskLoader.class.getSimpleName();
 
+    /**
+     * The requestType of the request that should be carried out. E.g. popular or top_rated
+     */
     private final NetworkUtils.requestType requestType;
 
+    /**
+     * Constructor for a {@link MoviePreviewAsyncTaskLoader}.
+     *
+     * @param activity    The activity that created the Loader. Passed to super constructor.
+     * @param requestType The requestType of the request that should be carried out.
+     *                    E.g. popular or top_rated
+     */
     public MoviePreviewAsyncTaskLoader(Activity activity, String requestType) {
         super(activity);
         Log.i(TAG, "AsyncTaskLoader initialized");

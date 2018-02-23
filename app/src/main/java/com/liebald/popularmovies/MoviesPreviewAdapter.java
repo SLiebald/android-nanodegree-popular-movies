@@ -22,6 +22,10 @@ import java.util.List;
  * Adapter for the Previews of popular movies.
  */
 public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdapter.PreviewViewHolder> {
+
+    /**
+     * Tag for Logging in this activity.
+     */
     private static final String TAG = MoviesPreviewAdapter.class.getSimpleName();
 
     /**
@@ -29,7 +33,15 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
      * on items managed by this class.
      */
     private final GridItemClickListener mGridItemClickListener;
+
+    /**
+     * Context of the Class using this Adapter.
+     */
     private final Context mContext;
+
+    /**
+     * The {@link List} of {@link MoviePreview}s that is managed by this adapter.
+     */
     private List<MoviePreview> moviePreviews;
 
     /**
@@ -118,9 +130,17 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
     class PreviewViewHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener {
 
-        // The ImageView for the Thumbnail we want to show.
+        /**
+         * The ImageView for the Thumbnail we want to show in this {@link PreviewViewHolder}.
+         */
         final ImageView imagePreview;
+        /**
+         * The {@link ProgressBar} of this {@link PreviewViewHolder}.
+         */
         final ProgressBar progressBar;
+        /**
+         * The {@link TextView} of this {@link PreviewViewHolder}.
+         */
         final TextView tvTitle;
 
         /**

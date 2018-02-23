@@ -9,6 +9,9 @@ import android.os.Parcelable;
  */
 public class MoviePreview implements Parcelable {
 
+    /**
+     * CREATOR for {@link Parcelable} Implementation
+     */
     static final Parcelable.Creator<MoviePreview> CREATOR
             = new Creator<MoviePreview>() {
         @Override
@@ -21,10 +24,29 @@ public class MoviePreview implements Parcelable {
             return new MoviePreview[size];
         }
     };
+    /**
+     * The relative path of the poster on tmdb.org.
+     */
     private String posterPath;
+
+    /**
+     * The title of the movie.
+     */
     private String title;
+
+    /**
+     * The overview description of the movie.
+     */
     private String overview;
+
+    /**
+     * The average votes of the movie.
+     */
     private String vote_average;
+
+    /**
+     * The release date of the movie.
+     */
     private String release_date;
 
     /**

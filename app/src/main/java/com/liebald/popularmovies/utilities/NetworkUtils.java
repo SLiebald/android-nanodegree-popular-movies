@@ -20,16 +20,21 @@ import java.util.Scanner;
 // Based on the NetworkUtils for Project Sunshine.
 public class NetworkUtils {
 
-
+    /**
+     * Tag for Logging in this activity.
+     */
     private static final String TAG = NetworkUtils.class.getSimpleName();
+
     /**
      * Base Url for searching movies on themoviedb.org.
      */
     private static final String MOVIE_PREVIEW_BASE_URL = "https://api.themoviedb.org/3/movie";
+
     /**
      * Base Url for images from tmdb.
      */
     private static final String MOVIE_IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
+
     /**
      * Query parameter for the api key.
      */
@@ -43,7 +48,6 @@ public class NetworkUtils {
      * @param requestType {@link requestType} defining what data should be requested (popular/top_rated)
      * @return The URL that queries for movies following the given parameters.
      */
-
     public static URL getUrl(@NonNull requestType requestType) {
         Uri moviePreviewUri = Uri.parse(MOVIE_PREVIEW_BASE_URL).buildUpon().appendPath(requestType.name())
                 .appendQueryParameter(API_KEY_PARAM, BuildConfig.TMDB_API_KEY)
