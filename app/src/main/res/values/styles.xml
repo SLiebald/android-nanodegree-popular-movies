@@ -16,7 +16,4 @@
         <item name="android:padding">4dp</item>
     </style>
 
-    <style name="contentStyleShort" parent="@style/TextAppearance.AppCompat.Title">
-        <item name="android:padding">4dp</item>
-    </style>
 </resources>

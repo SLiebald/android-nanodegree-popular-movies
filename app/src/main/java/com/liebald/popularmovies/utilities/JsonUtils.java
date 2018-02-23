@@ -116,9 +116,8 @@ public class JsonUtils {
      *
      * @param array The {@link JSONArray} to pars.
      * @return The parsed {@link List<String>}.
-     * @throws JSONException Thrown if a parsing error occurs.
      */
-    private static List<String> readListFromJsonArray(JSONArray array) throws JSONException {
+    private static List<String> readListFromJsonArray(JSONArray array) {
         List<String> result = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             result.add(array.optString(i));

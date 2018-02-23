@@ -1,13 +1,18 @@
 package com.liebald.popularmovies;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.Palette;
 import android.util.Log;
 
 import com.liebald.popularmovies.databinding.ActivityDetailBinding;
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.NetworkUtils;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -62,7 +67,43 @@ public class DetailActivity extends AppCompatActivity {
             binding.detailInfo.tvVoteAverageText.setText(getString(R.string.detail_rating, preview.getVote_average()));
         Picasso.with(this)
                 .load(NetworkUtils.getThumbnailURL(preview.getPosterPath()))
-                .into(binding.imagePreview);
+                .into(binding.imagePreview, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        updateBackground();
+                    }
+
+                    @Override
+                    public void onError() {
+                        Log.e(TAG, "Could not load image");
+                    }
+                });
     }
 
+
+    /**
+     * Updates the Background color of the activity depending on the bitmap image of the
+     * preview poster.
+     */
+    // inspired by https://stackoverflow.com/questions/25673021/changing-the-background-of-a-view-to-match-the-color-of-the-album-art
+    private void updateBackground() {
+        Bitmap bitmap = ((BitmapDrawable) binding.imagePreview.getDrawable()).getBitmap();
+        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(@NonNull Palette palette) {
+                Palette.Swatch swatch = palette.getVibrantSwatch();
+                if (swatch == null) swatch = palette.getMutedSwatch();
+                if (swatch != null) {
+                    binding.detailMaster.setBackgroundColor(swatch.getRgb());
+                    binding.detailInfo.tvOverviewLabel.setTextColor(swatch.getTitleTextColor());
+                    binding.detailInfo.tvOverviewText.setTextColor(swatch.getBodyTextColor());
+                    binding.detailInfo.tvReleaseDateLabel.setTextColor(swatch.getTitleTextColor());
+                    binding.detailInfo.tvReleaseDateText.setTextColor(swatch.getBodyTextColor());
+                    binding.detailInfo.tvVoteAverageLabel.setTextColor(swatch.getTitleTextColor());
+                    binding.detailInfo.tvVoteAverageText.setTextColor(swatch.getBodyTextColor());
+                }
+
+            }
+        });
+    }
 }

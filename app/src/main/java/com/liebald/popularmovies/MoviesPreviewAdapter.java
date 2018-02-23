@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.NetworkUtils;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
         Picasso.with(mContext)
                 .load(uri)
 
-                .into(holder.imagePreview, new com.squareup.picasso.Callback() {
+                .into(holder.imagePreview, new Callback() {
                     @Override
                     public void onSuccess() {
                         holder.progressBar.setVisibility(View.GONE);
