@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <ScrollView
@@ -10,21 +11,75 @@
         android:fadingEdgeLength="16dp"
         android:requiresFadingEdge="vertical">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:context="com.liebald.popularmovies.DetailActivity">
 
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
             <ImageView
                 android:id="@+id/image_preview"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/contentDescriptionPoster"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toStartOf="@id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_vote_average_label"
+                style="@style/labelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/rating_label"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_vote_average_text"
+                style="@style/contentStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="@id/tv_vote_average_label"
+                app:layout_constraintStart_toStartOf="@id/tv_vote_average_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_vote_average_label"
+                tools:text="4.4/10" />
+
+            <TextView
+                android:id="@+id/tv_release_date_label"
+                style="@style/labelStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/release_date_label"
+                app:layout_constraintStart_toStartOf="@id/tv_vote_average_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_vote_average_text" />
+
+            <TextView
+                android:id="@+id/tv_release_date_text"
+                style="@style/contentStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                app:layout_constraintEnd_toEndOf="@id/tv_release_date_label"
+                app:layout_constraintStart_toStartOf="@id/tv_release_date_label"
+                app:layout_constraintTop_toBottomOf="@id/tv_release_date_label"
+                tools:text="01.01.2018" />
 
 
             <include
@@ -32,8 +87,11 @@
                 layout="@layout/detail_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp" />
+                android:layout_margin="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_preview" />
 
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </layout>

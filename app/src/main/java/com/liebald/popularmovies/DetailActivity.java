@@ -62,9 +62,9 @@ public class DetailActivity extends AppCompatActivity {
         if (preview.getOverview() != null && !preview.getOverview().isEmpty())
             binding.detailInfo.tvOverviewText.setText(preview.getOverview());
         if (preview.getRelease_date() != null && !preview.getRelease_date().isEmpty())
-            binding.detailInfo.tvReleaseDateText.setText(preview.getRelease_date());
+            binding.tvReleaseDateText.setText(preview.getRelease_date());
         if (preview.getVote_average() != null && !preview.getVote_average().isEmpty())
-            binding.detailInfo.tvVoteAverageText.setText(getString(R.string.detail_rating, preview.getVote_average()));
+            binding.tvVoteAverageText.setText(getString(R.string.detail_rating, preview.getVote_average()));
         Picasso.with(this)
                 .load(NetworkUtils.getThumbnailURL(preview.getPosterPath()))
                 .into(binding.imagePreview, new Callback() {
@@ -97,10 +97,10 @@ public class DetailActivity extends AppCompatActivity {
                     binding.detailMaster.setBackgroundColor(swatch.getRgb());
                     binding.detailInfo.tvOverviewLabel.setTextColor(swatch.getTitleTextColor());
                     binding.detailInfo.tvOverviewText.setTextColor(swatch.getBodyTextColor());
-                    binding.detailInfo.tvReleaseDateLabel.setTextColor(swatch.getTitleTextColor());
-                    binding.detailInfo.tvReleaseDateText.setTextColor(swatch.getBodyTextColor());
-                    binding.detailInfo.tvVoteAverageLabel.setTextColor(swatch.getTitleTextColor());
-                    binding.detailInfo.tvVoteAverageText.setTextColor(swatch.getBodyTextColor());
+                    binding.tvReleaseDateLabel.setTextColor(swatch.getTitleTextColor());
+                    binding.tvReleaseDateText.setTextColor(swatch.getBodyTextColor());
+                    binding.tvVoteAverageLabel.setTextColor(swatch.getTitleTextColor());
+                    binding.tvVoteAverageText.setTextColor(swatch.getBodyTextColor());
                 }
 
             }
