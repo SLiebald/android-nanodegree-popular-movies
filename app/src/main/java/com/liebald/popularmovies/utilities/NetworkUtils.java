@@ -101,6 +101,29 @@ public class NetworkUtils {
     }
 
     /**
+     * Returns the Address that can be queried for reviews of the movie with the given ID.
+     *
+     * @param movieID The tmdb id of the movie.
+     * @return The full query url.
+     */
+    public static String getReviewsUrl(int movieID) {
+        return MOVIE_PREVIEW_BASE_URL + "/" + movieID + "/reviews?" + API_KEY_PARAM + "=" +
+                BuildConfig.TMDB_API_KEY;
+    }
+
+
+    /**
+     * Returns the Address that can be queried for videos of the movie with the given ID.
+     *
+     * @param movieID The tmdb id of the movie.
+     * @return The full query url.
+     */
+    public static String getVideosUrl(int movieID) {
+        return MOVIE_PREVIEW_BASE_URL + "/" + movieID + "/videos?" + API_KEY_PARAM + "=" +
+                BuildConfig.TMDB_API_KEY;
+    }
+
+    /**
      * Enum with possible parameters to sort the result by.
      */
     public enum requestType {

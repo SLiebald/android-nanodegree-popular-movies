@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.liebald.popularmovies.MainActivity">
+    tools:context="com.liebald.popularmovies.ui.main.MainActivity">
 
     <ProgressBar
         android:id="@+id/pb_loading"

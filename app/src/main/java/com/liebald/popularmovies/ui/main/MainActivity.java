@@ -1,4 +1,4 @@
-package com.liebald.popularmovies;
+package com.liebald.popularmovies.ui.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,7 +16,10 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.liebald.popularmovies.Loader.MoviePreviewAsyncTaskLoader;
+import com.liebald.popularmovies.R;
 import com.liebald.popularmovies.model.MoviePreview;
+import com.liebald.popularmovies.ui.about.AboutActivity;
+import com.liebald.popularmovies.ui.detail.DetailActivity;
 import com.liebald.popularmovies.utilities.NetworkUtils;
 
 import java.util.List;

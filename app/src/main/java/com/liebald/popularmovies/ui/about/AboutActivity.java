@@ -1,7 +1,9 @@
-package com.liebald.popularmovies;
+package com.liebald.popularmovies.ui.about;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.liebald.popularmovies.R;
 
 public class AboutActivity extends AppCompatActivity {
 

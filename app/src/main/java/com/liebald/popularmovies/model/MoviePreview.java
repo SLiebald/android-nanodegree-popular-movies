@@ -10,6 +10,11 @@ import android.os.Parcelable;
 public class MoviePreview implements Parcelable {
 
     /**
+     * Key for passing the movie ID to the review/trailer fragments.
+     */
+    public final static String MOVIE_ID_KEY = "movie_id";
+
+    /**
      * CREATOR for {@link Parcelable} Implementation
      */
     static final Parcelable.Creator<MoviePreview> CREATOR
@@ -50,6 +55,11 @@ public class MoviePreview implements Parcelable {
     private String release_date;
 
     /**
+     * The tmdb movie ID of the movie.
+     */
+    private int movie_id;
+
+    /**
      * Default constructor.
      */
     public MoviePreview() {
@@ -66,6 +76,16 @@ public class MoviePreview implements Parcelable {
         this.posterPath = in.readString();
         this.vote_average = in.readString();
         this.release_date = in.readString();
+        this.movie_id = in.readInt();
+
+    }
+
+    public int getMovie_id() {
+        return movie_id;
+    }
+
+    public void setMovie_id(int movie_id) {
+        this.movie_id = movie_id;
     }
 
     public String getPosterPath() {
@@ -120,6 +140,7 @@ public class MoviePreview implements Parcelable {
         dest.writeString(posterPath);
         dest.writeString(vote_average);
         dest.writeString(release_date);
+        dest.writeInt(movie_id);
     }
 
     @Override
@@ -128,8 +149,9 @@ public class MoviePreview implements Parcelable {
                 "posterPath='" + posterPath + '\'' +
                 ", title='" + title + '\'' +
                 ", overview='" + overview + '\'' +
-                ", top_rated='" + vote_average + '\'' +
+                ", vote_average='" + vote_average + '\'' +
                 ", release_date='" + release_date + '\'' +
+                ", movie_id=" + movie_id +
                 '}';
     }
 }

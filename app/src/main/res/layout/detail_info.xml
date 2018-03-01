@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -13,9 +13,7 @@
             style="@style/labelStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/overview_label"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent" />
+            android:text="@string/overview_label" />
 
         <TextView
             android:id="@+id/tv_overview_text"
@@ -24,10 +22,24 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
             android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="@id/tv_overview_label"
-            app:layout_constraintTop_toBottomOf="@id/tv_overview_label"
             tools:text="Lorum Ipsum etc." />
 
-    </android.support.constraint.ConstraintLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="fixed" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager_details"
+                android:layout_width="match_parent"
+                android:layout_height="400dp" />
+        </FrameLayout>
+    </LinearLayout>
 
 </layout>

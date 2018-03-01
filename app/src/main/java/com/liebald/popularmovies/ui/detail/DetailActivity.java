@@ -1,14 +1,17 @@
-package com.liebald.popularmovies;
+package com.liebald.popularmovies.ui.detail;
 
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
 
+import com.liebald.popularmovies.R;
 import com.liebald.popularmovies.databinding.ActivityDetailBinding;
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.NetworkUtils;
@@ -46,11 +49,17 @@ public class DetailActivity extends AppCompatActivity {
             }
         } else return;
 
-
+        // Setup the viewpager
+        DetailsFragmentPagerAdapter detailsFragmentPagerAdapter = new DetailsFragmentPagerAdapter(this, getSupportFragmentManager(), preview.getMovie_id());
+        ViewPager viewPager = binding.detailInfo.viewpagerDetails;
+        viewPager.setAdapter(detailsFragmentPagerAdapter);
+        TabLayout tabLayout = binding.detailInfo.tabsDetails;
+        tabLayout.setupWithViewPager(binding.detailInfo.viewpagerDetails);
         setTitle(preview.getTitle());
 
         fillLayout(preview);
         Log.d(TAG, "Detailed Preview filled");
+
     }
 
     /**
@@ -70,7 +79,7 @@ public class DetailActivity extends AppCompatActivity {
                 .into(binding.imagePreview, new Callback() {
                     @Override
                     public void onSuccess() {
-                        updateBackground();
+//                        updateBackground();
                     }
 
                     @Override
@@ -78,6 +87,7 @@ public class DetailActivity extends AppCompatActivity {
                         Log.e(TAG, "Could not load image");
                     }
                 });
+
     }
 
 

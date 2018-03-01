@@ -1,4 +1,4 @@
-package com.liebald.popularmovies;
+package com.liebald.popularmovies.ui.main;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.liebald.popularmovies.R;
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.NetworkUtils;
 import com.squareup.picasso.Callback;
@@ -55,7 +55,6 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
         mGridItemClickListener = listener;
         moviePreviews = new ArrayList<>();
         mContext = context;
-        //TODO: do sth. with the movie previews.
     }
 
     @Override
@@ -76,14 +75,11 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
                 .into(holder.imagePreview, new Callback() {
                     @Override
                     public void onSuccess() {
-                        holder.progressBar.setVisibility(View.GONE);
-                        holder.imagePreview.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onError() {
                         Log.e(TAG, "Could not load image");
-                        holder.progressBar.setVisibility(View.GONE);
                     }
                 });
         holder.tvTitle.setText(moviePreview.getTitle());
@@ -111,7 +107,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
      * @param index Index to retrieve.
      * @return The {@link MoviePreview} at the specified Index. Null if index doesn't exist.
      */
-    MoviePreview getItem(int index) {
+    public MoviePreview getItem(int index) {
         if (moviePreviews.size() <= index)
             return null;
         return moviePreviews.get(index);
@@ -135,10 +131,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
          * The ImageView for the Thumbnail we want to show in this {@link PreviewViewHolder}.
          */
         final ImageView imagePreview;
-        /**
-         * The {@link ProgressBar} of this {@link PreviewViewHolder}.
-         */
-        final ProgressBar progressBar;
+
         /**
          * The {@link TextView} of this {@link PreviewViewHolder}.
          */
@@ -152,7 +145,6 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
         PreviewViewHolder(View itemView) {
             super(itemView);
             imagePreview = itemView.findViewById(R.id.image_preview);
-            progressBar = itemView.findViewById(R.id.pb_loading_image);
             tvTitle = itemView.findViewById(R.id.tv_title);
             itemView.setOnClickListener(this);
         }

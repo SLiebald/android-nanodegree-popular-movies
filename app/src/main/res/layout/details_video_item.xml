@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cv_preview"
+    android:id="@+id/cv_review"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardCornerRadius="@dimen/cardViewCornerRadius"
@@ -15,23 +14,20 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/image_preview"
+            android:id="@+id/image_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/contentDescriptionPoster"
+            android:contentDescription="@string/content_description_trailer_image"
             android:scaleType="centerCrop" />
 
         <TextView
-            android:id="@+id/tv_title"
-            style="@style/TextAppearance.AppCompat.Subhead"
+            android:id="@+id/tv_videoTitle"
+            style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="4dp"
-            tools:text="Black Panther" />
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp" />
     </LinearLayout>
 </android.support.v7.widget.CardView>
-
-

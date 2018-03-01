@@ -3,6 +3,8 @@ package com.liebald.popularmovies.utilities;
 import android.util.Log;
 
 import com.liebald.popularmovies.model.MoviePreview;
+import com.liebald.popularmovies.model.Review;
+import com.liebald.popularmovies.model.Video;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,29 +29,55 @@ public class JsonUtils {
     private static final String RESULTS_KEY = "results";
 
     /**
-     * Json key for accessing the poster path.
+     * Json key for accessing a poster path.
      */
     private static final String POSTER_PATH_KEY = "poster_path";
 
     /**
-     * Json key for accessing the movie title.
+     * Json key for accessing a movie title.
      */
     private static final String TITLE_KEY = "title";
 
     /**
-     * Json key for accessing the movie overview description.
+     * Json key for accessing a movie overview description.
      */
     private static final String OVERVIEW_KEY = "overview";
 
     /**
-     * Json key for accessing the movies average votes.
+     * Json key for accessing a movies average votes.
      */
     private static final String VOTE_AVERAGE_KEY = "vote_average";
 
     /**
-     * Json key for accessing the movies release date.
+     * Json key for accessing a movies release date.
      */
     private static final String RELEASE_DATE_KEY = "release_date";
+
+    /**
+     * Json key for accessing a movies id.
+     */
+    private static final String ID_KEY = "id";
+
+    /**
+     * Json key for accessing a reviews author.
+     */
+    private static final String REVIEWER_KEY = "author";
+
+    /**
+     * Json key for accessing a reviews content.
+     */
+    private static final String REVIEW_KEY = "content";
+
+    /**
+     * Json key for accessing a videos key.
+     */
+    private static final String VIDEO_KEY_KEY = "key";
+
+    /**
+     * Json key for accessing the videos name.
+     */
+    private static final String VIDEO_NAME_KEY = "name";
+
 
     /**
      * Parses a json String containing multiple movie Previews into a {@link List} of {@link MoviePreview}s.
@@ -103,6 +131,10 @@ public class JsonUtils {
 
             if (jsonMoviePreview.has(RELEASE_DATE_KEY))
                 moviePreview.setRelease_date(jsonMoviePreview.optString(RELEASE_DATE_KEY));
+
+            if (jsonMoviePreview.has(ID_KEY))
+                moviePreview.setMovie_id(jsonMoviePreview.optInt(ID_KEY));
+
             return moviePreview;
         } catch (JSONException exception) {
             Log.e(TAG, "Error parsing the json String: " + exception);
@@ -110,6 +142,110 @@ public class JsonUtils {
         }
     }
 
+
+    /**
+     * Parses a json String containing multiple movie reviews into a {@link List} of {@link Review}s.
+     *
+     * @param jsonObject The json to parse.
+     * @return The parsed {@link List} of {@link Review}s. Null if an error occurred.
+     */
+    public static List<Review> parseMovieReviews(JSONObject jsonObject) {
+        ArrayList<Review> movieReviews = new ArrayList<>();
+
+        try {
+            if (!jsonObject.has(RESULTS_KEY))
+                return movieReviews;
+            JSONArray results = jsonObject.getJSONArray(RESULTS_KEY);
+
+            for (String result : readListFromJsonArray(results)) {
+
+                Review review = parseMovieReview(result);
+                if (review != null)
+                    movieReviews.add(review);
+            }
+            return movieReviews;
+        } catch (JSONException exception) {
+            Log.e(TAG, "Error parsing the json String: " + exception);
+        }
+        return movieReviews;
+    }
+
+    /**
+     * Parses a single movie review from json.
+     *
+     * @param json Json containing a single review.
+     * @return The parsed {@link Review}.
+     */
+    private static Review parseMovieReview(String json) {
+        try {
+            Review movieReview = new Review();
+            JSONObject jsonMovieReview = new JSONObject(json);
+            if (jsonMovieReview.has(REVIEW_KEY))
+                movieReview.setReview(jsonMovieReview.optString(REVIEW_KEY));
+
+            if (jsonMovieReview.has(REVIEWER_KEY))
+                movieReview.setReviewer(jsonMovieReview.optString(REVIEWER_KEY));
+
+            if (jsonMovieReview.has(ID_KEY))
+                movieReview.setReview_id(jsonMovieReview.optInt(ID_KEY));
+
+            return movieReview;
+        } catch (JSONException exception) {
+            Log.e(TAG, "Error parsing the json String: " + exception);
+            return null;
+        }
+    }
+
+
+    /**
+     * Parses a json String containing multiple movie reviews into a {@link List} of {@link Video}s.
+     *
+     * @param jsonObject The json to parse.
+     * @return The parsed {@link List} of {@link Video}s. Null if an error occurred.
+     */
+    public static List<Video> parseMovieVideos(JSONObject jsonObject) {
+        ArrayList<Video> videos = new ArrayList<>();
+
+        try {
+            if (!jsonObject.has(RESULTS_KEY))
+                return videos;
+            JSONArray results = jsonObject.getJSONArray(RESULTS_KEY);
+
+            for (String result : readListFromJsonArray(results)) {
+
+                Video video = parseMovieVideo(result);
+                if (video != null)
+                    videos.add(video);
+            }
+            return videos;
+        } catch (JSONException exception) {
+            Log.e(TAG, "Error parsing the json String: " + exception);
+        }
+        return videos;
+    }
+
+    /**
+     * Parses a single movie video data from json.
+     *
+     * @param json Json containing a single review.
+     * @return The parsed {@link Video}.
+     */
+    private static Video parseMovieVideo(String json) {
+        try {
+            Video video = new Video();
+            JSONObject jsonVideo = new JSONObject(json);
+            if (jsonVideo.has(VIDEO_KEY_KEY))
+                video.setKey(jsonVideo.optString(VIDEO_KEY_KEY));
+
+            if (jsonVideo.has(VIDEO_NAME_KEY))
+                video.setName(jsonVideo.optString(VIDEO_NAME_KEY));
+
+            return video;
+        } catch (JSONException exception) {
+            Log.e(TAG, "Error parsing the json String: " + exception);
+            return null;
+        }
+    }
 
     /**
      * Helper method to pars a {@link JSONArray} as {@link List <String>}.

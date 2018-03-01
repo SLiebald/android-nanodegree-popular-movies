@@ -8,14 +8,13 @@
         android:id="@+id/detail_master"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fadingEdgeLength="16dp"
-        android:requiresFadingEdge="vertical">
+        android:fillViewport="true">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:context="com.liebald.popularmovies.DetailActivity">
+            tools:context="com.liebald.popularmovies.ui.detail.DetailActivity">
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline"
@@ -81,7 +80,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_release_date_label"
                 tools:text="01.01.2018" />
 
-
             <include
                 android:id="@+id/detail_info"
                 layout="@layout/detail_info"
@@ -91,7 +89,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/image_preview" />
-
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </layout>
