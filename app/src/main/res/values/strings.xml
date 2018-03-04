@@ -16,5 +16,7 @@
     <string name="tab_reviews">Reviews</string>
     <string name="content_description_trailer_image">Image preview of the movie video.</string>
     <string name="content_authority">com.liebald.popularmovies</string>
+    <string name="favorite_icon">Favored</string>
+    <string name="not_favorite_icon">Unfavored</string>
 
 </resources>

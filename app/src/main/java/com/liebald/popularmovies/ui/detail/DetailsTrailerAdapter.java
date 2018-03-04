@@ -69,13 +69,11 @@ public class DetailsTrailerAdapter extends RecyclerView.Adapter<DetailsTrailerAd
                         @Override
                         public void onSuccess() {
                             Log.d(TAG, "Loading preview success");
-
                         }
 
                         @Override
                         public void onError() {
                             Log.d(TAG, "Loading preview error");
-
                         }
                     });
         }

@@ -24,6 +24,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 /**
  * {@link ContentProvider} for the locally stored favorites of the popularmovies app.
@@ -34,7 +35,10 @@ public class MovieProvider extends ContentProvider {
     // Constants for mapping URIs with the requested data. Used by the {@link UriMatcher}.
     public static final int CODE_MOVIE = 100;
     public static final int CODE_MOVIE_WITH_ID = 101;
-
+    /**
+     * Tag for Logging in this activity.
+     */
+    private static final String TAG = MovieProvider.class.getSimpleName();
     /*
      * The URI Matcher used by this content provider.
      */
@@ -83,15 +87,16 @@ public class MovieProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues value) {
         final SQLiteDatabase db = mMovieDbHelper.getWritableDatabase();
-
         switch (sUriMatcher.match(uri)) {
-            case CODE_MOVIE_WITH_ID:
-                long id = db.insert(MovieContract.MovieEntry.TABLE_NAME, null, value);
+            case CODE_MOVIE:
+                int id = value.getAsInteger(MovieContract.MovieEntry.COLUMN_MOVIE_ID);
+                db.insert(MovieContract.MovieEntry.TABLE_NAME, null, value);
                 getContext().getContentResolver().notifyChange(uri, null);
                 Uri baseUri = MovieContract.BASE_CONTENT_URI.buildUpon().path(MovieContract.PATH_MOVIE).build();
+                Log.d(TAG, "Inserted movie with base uri " + baseUri.toString() + " and id " + id);
                 return ContentUris.withAppendedId(baseUri, id);
             default:
-                throw new UnsupportedOperationException("Unknown uri: " + uri + " only inserts with movie ID are supported.");
+                throw new UnsupportedOperationException("Unknown uri: " + uri + " only inserts without parameters are supported");
         }
     }
 
@@ -102,7 +107,7 @@ public class MovieProvider extends ContentProvider {
     }
 
     /**
-     * Handles query requests from clients. Can be queried for all movie data stored or individual
+     * Handles query requests from clients of this {@link ContentProvider}. Can be queried for all movie data stored or individual
      * movies based on their id.
      *
      * @param uri           The URI to query
@@ -165,7 +170,7 @@ public class MovieProvider extends ContentProvider {
     }
 
     /**
-     * Deletes a movie data at a given URI.
+     * Deletes a movie data at a given URI. Only supports deletion of one item at a time.
      *
      * @param uri           The full URI to the item that should be deleted.
      * @param selection     An optional restriction to apply to rows when deleting.

@@ -37,12 +37,12 @@ public class MovieDbHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
 
                         // The movie ID should be unique and can be used as primary key.
-                        MovieEntry.COLUMN_MOVIE_ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                        MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +
                         MovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
                         MovieEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL," +
                         MovieEntry.COLUMN_RATING + " REAL NOT NULL, " +
                         MovieEntry.COLUMN_THUMBNAIL + " BLOB NOT NULL, " +
-
                         // In case a movie already exists in the database just update it.
                         " UNIQUE (" + MovieEntry.COLUMN_MOVIE_ID + ") ON CONFLICT REPLACE);";
 
