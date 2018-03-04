@@ -2,4 +2,5 @@
 <resources>
     <dimen name="cardViewCornerRadius">4dp</dimen>
     <dimen name="cardViewElevation">2dp</dimen>
+    <dimen name="margin_bottom_action_bar">66dp</dimen>
 </resources>

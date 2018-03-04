@@ -1,6 +1,7 @@
 package com.liebald.popularmovies.ui.detail;
 
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -48,6 +49,15 @@ public class DetailsReviewsFragment extends Fragment {
 
         // Setup the recyclerView and adapter  for reviews.
         RecyclerView recyclerView = view.findViewById(R.id.recycler_reviews);
+
+        // In Portrait orientation the bottom action bar cuts of the last item of the recyclerview.
+        // Therefore we need to add a fitting bottom margin in this case. In landscape orientation the bar is on the side.
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            ViewGroup.MarginLayoutParams margins = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
+            margins.setMargins(0, 0, 0, (int) getResources().getDimension(R.dimen.margin_bottom_action_bar));
+            recyclerView.setLayoutParams(margins);
+        }
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         mReviewsAdapter = new DetailsReviewsAdapter();

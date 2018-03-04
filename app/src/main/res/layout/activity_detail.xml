@@ -7,7 +7,7 @@
     <ScrollView
         android:id="@+id/detail_master"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:fillViewport="true">
 
         <android.support.constraint.ConstraintLayout

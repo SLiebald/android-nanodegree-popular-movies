@@ -3,6 +3,7 @@ package com.liebald.popularmovies.ui.detail;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -49,6 +50,15 @@ public class DetailsTrailerFragment extends Fragment implements DetailsTrailerAd
 
         // Setup the recyclerView and adapters for trailers.
         RecyclerView mReviewsList = view.findViewById(R.id.recycler_trailer);
+
+        // In Portrait orientation the bottom action bar cuts of the last item of the recyclerview.
+        // Therefore we need to add a fitting bottom margin in this case. In landscape orientation the bar is on the side.
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            ViewGroup.MarginLayoutParams margins = (ViewGroup.MarginLayoutParams) mReviewsList.getLayoutParams();
+            margins.setMargins(0, 0, 0, (int) getResources().getDimension(R.dimen.margin_bottom_action_bar));
+            mReviewsList.setLayoutParams(margins);
+        }
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         mReviewsList.setLayoutManager(layoutManager);
         mTrailerAdapter = new DetailsTrailerAdapter(this, getContext());
