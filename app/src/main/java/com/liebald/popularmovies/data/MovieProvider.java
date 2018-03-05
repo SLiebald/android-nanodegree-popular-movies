@@ -91,7 +91,8 @@ public class MovieProvider extends ContentProvider {
             case CODE_MOVIE:
                 int id = value.getAsInteger(MovieContract.MovieEntry.COLUMN_MOVIE_ID);
                 db.insert(MovieContract.MovieEntry.TABLE_NAME, null, value);
-                getContext().getContentResolver().notifyChange(uri, null);
+                if (getContext() != null)
+                    getContext().getContentResolver().notifyChange(uri, null);
                 Uri baseUri = MovieContract.BASE_CONTENT_URI.buildUpon().path(MovieContract.PATH_MOVIE).build();
                 Log.d(TAG, "Inserted movie with base uri " + baseUri.toString() + " and id " + id);
                 return ContentUris.withAppendedId(baseUri, id);
@@ -164,8 +165,8 @@ public class MovieProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-
-        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+        if (getContext() != null)
+            cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -182,8 +183,6 @@ public class MovieProvider extends ContentProvider {
 
         /* Users of the delete method will expect the number of rows deleted to be returned. */
         int numRowsDeleted;
-
-        if (null == selection) selection = "1";
 
         switch (sUriMatcher.match(uri)) {
 
@@ -204,7 +203,7 @@ public class MovieProvider extends ContentProvider {
         }
 
         /* If we actually deleted any rows, notify that a change has occurred to this URI */
-        if (numRowsDeleted != 0) {
+        if (numRowsDeleted != 0 && getContext() != null) {
             getContext().getContentResolver().notifyChange(uri, null);
         }
 

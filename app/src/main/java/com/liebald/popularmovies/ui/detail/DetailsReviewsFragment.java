@@ -49,7 +49,7 @@ public class DetailsReviewsFragment extends Fragment {
 
         // Setup the recyclerView and adapter  for reviews.
         RecyclerView recyclerView = view.findViewById(R.id.recycler_reviews);
-
+        recyclerView.setFocusable(false);
         // In Portrait orientation the bottom action bar cuts of the last item of the recyclerview.
         // Therefore we need to add a fitting bottom margin in this case. In landscape orientation the bar is on the side.
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {

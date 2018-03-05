@@ -50,6 +50,7 @@ public class DetailsTrailerFragment extends Fragment implements DetailsTrailerAd
 
         // Setup the recyclerView and adapters for trailers.
         RecyclerView mReviewsList = view.findViewById(R.id.recycler_trailer);
+        mReviewsList.setFocusable(false);
 
         // In Portrait orientation the bottom action bar cuts of the last item of the recyclerview.
         // Therefore we need to add a fitting bottom margin in this case. In landscape orientation the bar is on the side.

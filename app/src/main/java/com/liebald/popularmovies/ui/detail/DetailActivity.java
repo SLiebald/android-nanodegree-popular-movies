@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -23,9 +22,6 @@ import com.liebald.popularmovies.databinding.ActivityDetailBinding;
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.AppExecutors;
 import com.liebald.popularmovies.utilities.BitmapConverter;
-import com.liebald.popularmovies.utilities.NetworkUtils;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.util.concurrent.Executor;
 
@@ -51,15 +47,12 @@ public class DetailActivity extends AppCompatActivity {
      * Executor for talking to the Content Provider
      */
     private Executor diskIoExecutor;
-    /**
-     * Handler that allows other treads to manipulate the ui.
-     */
-    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+
         Bundle extras = getIntent().getExtras();
 
 
@@ -68,7 +61,6 @@ public class DetailActivity extends AppCompatActivity {
                 return;
             }
         } else return;
-
         // Setup the viewpager
         DetailsFragmentPagerAdapter detailsFragmentPagerAdapter = new DetailsFragmentPagerAdapter(this, getSupportFragmentManager(), preview.getMovie_id());
         ViewPager viewPager = binding.detailInfo.viewpagerDetails;
@@ -79,9 +71,8 @@ public class DetailActivity extends AppCompatActivity {
 
         fillLayout(preview);
         Log.d(TAG, "Detailed Preview filled");
-
         diskIoExecutor = AppExecutors.getInstance().diskIO();
-
+        binding.detailMaster.requestFocus();
 
     }
 
@@ -98,19 +89,9 @@ public class DetailActivity extends AppCompatActivity {
             binding.tvReleaseDateText.setText(preview.getRelease_date());
         if (preview.getVote_average() != null && !preview.getVote_average().isEmpty())
             binding.tvVoteAverageText.setText(getString(R.string.detail_rating, preview.getVote_average()));
-        Picasso.with(this)
-                .load(NetworkUtils.getThumbnailURL(preview.getPosterPath()))
-                .into(binding.imagePreview, new Callback() {
-                    @Override
-                    public void onSuccess() {
-//                        updateBackground();
-                    }
-
-                    @Override
-                    public void onError() {
-                        Log.e(TAG, "Could not load image");
-                    }
-                });
+        if (preview.getImage_thumbail() != null) {
+            binding.imagePreview.setImageBitmap(preview.getImage_thumbail());
+        }
     }
 
     /**
@@ -181,6 +162,7 @@ public class DetailActivity extends AppCompatActivity {
             movieValues.put(MovieContract.MovieEntry.COLUMN_DESCRIPTION, preview.getOverview());
             movieValues.put(MovieContract.MovieEntry.COLUMN_RATING, preview.getVote_average());
             movieValues.put(MovieContract.MovieEntry.COLUMN_RELEASE_DATE, preview.getRelease_date());
+            movieValues.put(MovieContract.MovieEntry.COLUMN_TITLE, preview.getTitle());
             if (binding.imagePreview.getDrawable() != null) {
                 Bitmap bitmap = ((BitmapDrawable) binding.imagePreview.getDrawable()).getBitmap();
                 movieValues.put(MovieContract.MovieEntry.COLUMN_THUMBNAIL, BitmapConverter.getBytes(bitmap));

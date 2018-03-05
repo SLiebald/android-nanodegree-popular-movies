@@ -18,5 +18,6 @@
     <string name="content_authority">com.liebald.popularmovies</string>
     <string name="favorite_icon">Favored</string>
     <string name="not_favorite_icon">Unfavored</string>
+    <string name="favorites">Favorites</string>
 
 </resources>

@@ -1,6 +1,8 @@
 package com.liebald.popularmovies.ui.main;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -68,22 +70,27 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
     @Override
     public void onBindViewHolder(final PreviewViewHolder holder, int position) {
         MoviePreview moviePreview = moviePreviews.get(position);
-        Uri uri = NetworkUtils.getThumbnailURL(moviePreview.getPosterPath());
-        Picasso.with(mContext)
-                .load(uri)
-
-                .into(holder.imagePreview, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                    }
-
-                    @Override
-                    public void onError() {
-                        Log.e(TAG, "Could not load image");
-                    }
-                });
         holder.tvTitle.setText(moviePreview.getTitle());
 
+        if (moviePreview.getImage_thumbail() != null) {
+            holder.imagePreview.setImageBitmap(moviePreview.getImage_thumbail());
+        } else {
+            Uri uri = NetworkUtils.getThumbnailURL(moviePreview.getPosterPath());
+            Picasso.with(mContext)
+                    .load(uri)
+                    .into(holder.imagePreview, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Bitmap bitmap = ((BitmapDrawable) holder.imagePreview.getDrawable()).getBitmap();
+                            moviePreview.setImage_thumbail(bitmap);
+                        }
+
+                        @Override
+                        public void onError() {
+                            Log.e(TAG, "Could not load image");
+                        }
+                    });
+        }
     }
 
     @Override

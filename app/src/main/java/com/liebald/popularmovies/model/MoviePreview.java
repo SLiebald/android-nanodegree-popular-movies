@@ -1,8 +1,11 @@
 package com.liebald.popularmovies.model;
 
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.liebald.popularmovies.utilities.BitmapConverter;
 
 /**
  * Model for a movie Preview. Holds all relevant Values for a movie preview.
@@ -13,7 +16,6 @@ public class MoviePreview implements Parcelable {
      * Key for passing the movie ID to the review/trailer fragments.
      */
     public final static String MOVIE_ID_KEY = "movie_id";
-
     /**
      * CREATOR for {@link Parcelable} Implementation
      */
@@ -33,31 +35,30 @@ public class MoviePreview implements Parcelable {
      * The relative path of the poster on tmdb.org.
      */
     private String posterPath;
-
     /**
      * The title of the movie.
      */
     private String title;
-
     /**
      * The overview description of the movie.
      */
     private String overview;
-
     /**
      * The average votes of the movie.
      */
     private String vote_average;
-
     /**
      * The release date of the movie.
      */
     private String release_date;
-
     /**
      * The tmdb movie ID of the movie.
      */
     private int movie_id;
+    /**
+     * The image thumbnail of the movie.
+     */
+    private Bitmap image_thumbail;
 
     /**
      * Default constructor.
@@ -77,7 +78,9 @@ public class MoviePreview implements Parcelable {
         this.vote_average = in.readString();
         this.release_date = in.readString();
         this.movie_id = in.readInt();
-
+        byte[] bytes = new byte[in.readInt()];
+        in.readByteArray(bytes);
+        this.image_thumbail = BitmapConverter.getImage(bytes);
     }
 
     public int getMovie_id() {
@@ -128,6 +131,14 @@ public class MoviePreview implements Parcelable {
         this.release_date = release_date;
     }
 
+    public Bitmap getImage_thumbail() {
+        return image_thumbail;
+    }
+
+    public void setImage_thumbail(Bitmap image_thumbail) {
+        this.image_thumbail = image_thumbail;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -141,6 +152,15 @@ public class MoviePreview implements Parcelable {
         dest.writeString(vote_average);
         dest.writeString(release_date);
         dest.writeInt(movie_id);
+
+        // for some reason writing the bitmap directly to the Parcel doesn't work:
+        // dest.writeParcelable(image_thumbail, flags);
+        // If tried the app crashes without feedback when starting the detail activity.
+        // Converting to a byte array and transferring that works however.
+        byte[] bytes = BitmapConverter.getBytes(image_thumbail);
+        dest.writeInt(bytes.length);
+        // image_thumbail.writeToParcel(dest, flags);
+        dest.writeByteArray(bytes);
     }
 
     @Override

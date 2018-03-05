@@ -46,6 +46,12 @@ public class MovieContract {
         public static final String COLUMN_MOVIE_ID = "movie_id";
 
         /**
+         * Movie title.
+         */
+        public static final String COLUMN_TITLE = "title";
+
+
+        /**
          * Movie overview is stored as String.
          */
         public static final String COLUMN_DESCRIPTION = "overview";
