@@ -58,7 +58,7 @@ public class MoviePreview implements Parcelable {
     /**
      * The image thumbnail of the movie.
      */
-    private Bitmap image_thumbail;
+    private Bitmap image_thumbnail;
 
     /**
      * Default constructor.
@@ -80,7 +80,7 @@ public class MoviePreview implements Parcelable {
         this.movie_id = in.readInt();
         byte[] bytes = new byte[in.readInt()];
         in.readByteArray(bytes);
-        this.image_thumbail = BitmapConverter.getImage(bytes);
+        this.image_thumbnail = BitmapConverter.getImage(bytes);
     }
 
     public int getMovie_id() {
@@ -131,12 +131,12 @@ public class MoviePreview implements Parcelable {
         this.release_date = release_date;
     }
 
-    public Bitmap getImage_thumbail() {
-        return image_thumbail;
+    public Bitmap getImage_thumbnail() {
+        return image_thumbnail;
     }
 
-    public void setImage_thumbail(Bitmap image_thumbail) {
-        this.image_thumbail = image_thumbail;
+    public void setImage_thumbnail(Bitmap image_thumbnail) {
+        this.image_thumbnail = image_thumbnail;
     }
 
     @Override
@@ -154,12 +154,11 @@ public class MoviePreview implements Parcelable {
         dest.writeInt(movie_id);
 
         // for some reason writing the bitmap directly to the Parcel doesn't work:
-        // dest.writeParcelable(image_thumbail, flags);
+        // dest.writeParcelable(image_thumbnail, flags);
         // If tried the app crashes without feedback when starting the detail activity.
         // Converting to a byte array and transferring that works however.
-        byte[] bytes = BitmapConverter.getBytes(image_thumbail);
+        byte[] bytes = BitmapConverter.getBytes(image_thumbnail);
         dest.writeInt(bytes.length);
-        // image_thumbail.writeToParcel(dest, flags);
         dest.writeByteArray(bytes);
     }
 

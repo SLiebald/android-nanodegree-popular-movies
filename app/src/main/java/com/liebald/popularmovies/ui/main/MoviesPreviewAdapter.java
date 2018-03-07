@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,21 +60,24 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
         mContext = context;
     }
 
+    @NonNull
     @Override
-    public PreviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PreviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.thumbnail_grid_item, parent, false);
+        Log.d(TAG, "viewHolder created ");
+
         return new PreviewViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final PreviewViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final PreviewViewHolder holder, int position) {
         MoviePreview moviePreview = moviePreviews.get(position);
         holder.tvTitle.setText(moviePreview.getTitle());
 
-        if (moviePreview.getImage_thumbail() != null) {
-            holder.imagePreview.setImageBitmap(moviePreview.getImage_thumbail());
+        if (moviePreview.getImage_thumbnail() != null) {
+            holder.imagePreview.setImageBitmap(moviePreview.getImage_thumbnail());
         } else {
             Uri uri = NetworkUtils.getThumbnailURL(moviePreview.getPosterPath());
             Picasso.with(mContext)
@@ -82,7 +86,7 @@ public class MoviesPreviewAdapter extends RecyclerView.Adapter<MoviesPreviewAdap
                         @Override
                         public void onSuccess() {
                             Bitmap bitmap = ((BitmapDrawable) holder.imagePreview.getDrawable()).getBitmap();
-                            moviePreview.setImage_thumbail(bitmap);
+                            moviePreview.setImage_thumbnail(bitmap);
                         }
 
                         @Override

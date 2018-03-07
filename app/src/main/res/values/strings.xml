@@ -19,5 +19,6 @@
     <string name="favorite_icon">Favored</string>
     <string name="not_favorite_icon">Unfavored</string>
     <string name="favorites">Favorites</string>
+    <string name="warning_trailer_reviews_no_internet">Trailer and reviews only available with active Internet connection</string>
 
 </resources>

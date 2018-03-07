@@ -10,19 +10,19 @@ import com.liebald.popularmovies.data.MovieContract.MovieEntry;
  * Manages a local database for movies data.
  */
 // Based on the DbHelper for Project Sunshine.
-public class MovieDbHelper extends SQLiteOpenHelper {
+class MovieDbHelper extends SQLiteOpenHelper {
 
     /**
      * The name of the database.
      */
-    public static final String DATABASE_NAME = "movies.db";
+    private static final String DATABASE_NAME = "movies.db";
 
     /**
      * The version of the database.
      */
     private static final int DATABASE_VERSION = 1;
 
-    public MovieDbHelper(Context context) {
+    MovieDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

@@ -33,8 +33,8 @@ import android.util.Log;
 public class MovieProvider extends ContentProvider {
 
     // Constants for mapping URIs with the requested data. Used by the {@link UriMatcher}.
-    public static final int CODE_MOVIE = 100;
-    public static final int CODE_MOVIE_WITH_ID = 101;
+    private static final int CODE_MOVIE = 100;
+    private static final int CODE_MOVIE_WITH_ID = 101;
     /**
      * Tag for Logging in this activity.
      */
@@ -51,7 +51,7 @@ public class MovieProvider extends ContentProvider {
      *
      * @return A UriMatcher that correctly matches the constants for CODE_MOVIE and CODE_MOVIE_WITH_ID
      */
-    public static UriMatcher buildUriMatcher() {
+    private static UriMatcher buildUriMatcher() {
 
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = MovieContract.CONTENT_AUTHORITY;
@@ -197,7 +197,7 @@ public class MovieProvider extends ContentProvider {
                         selectionArguments);
                 break;
             default:
-                // Since a user can only unmark one movie at a time as not favored we don't need the
+                // Since a user can only remove one movie at a time from his favorites we don't need the
                 // possibility to delete all entries at once.
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }

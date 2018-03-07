@@ -13,16 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.liebald.popularmovies.R;
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.JsonUtils;
 import com.liebald.popularmovies.utilities.NetworkUtils;
 import com.liebald.popularmovies.utilities.VolleyRequests;
-
-import org.json.JSONObject;
 
 
 /**
@@ -50,7 +46,7 @@ public class DetailsReviewsFragment extends Fragment {
         // Setup the recyclerView and adapter  for reviews.
         RecyclerView recyclerView = view.findViewById(R.id.recycler_reviews);
         recyclerView.setFocusable(false);
-        // In Portrait orientation the bottom action bar cuts of the last item of the recyclerview.
+        // In Portrait orientation the bottom action bar cuts of the last item of the recyclerView.
         // Therefore we need to add a fitting bottom margin in this case. In landscape orientation the bar is on the side.
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             ViewGroup.MarginLayoutParams margins = (ViewGroup.MarginLayoutParams) recyclerView.getLayoutParams();
@@ -70,19 +66,10 @@ public class DetailsReviewsFragment extends Fragment {
             movieID = bundle.getInt(MoviePreview.MOVIE_ID_KEY);
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, NetworkUtils.getReviewsUrl(movieID), null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        mReviewsAdapter.swapItems(JsonUtils.parseMovieReviews(response));
-                        Log.d(TAG, response.toString());
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, "Error on loading Reviews via volley: " + error.getMessage());
-                    }
-                });
+                (Request.Method.GET, NetworkUtils.getReviewsUrl(movieID), null, response -> {
+                    mReviewsAdapter.swapItems(JsonUtils.parseMovieReviews(response));
+                    Log.d(TAG, response.toString());
+                }, error -> Log.e(TAG, "Error on loading Reviews via volley: " + error.getMessage()));
         VolleyRequests.getInstance(getContext()).addToRequestQueue(jsObjRequest);
         return view;
     }

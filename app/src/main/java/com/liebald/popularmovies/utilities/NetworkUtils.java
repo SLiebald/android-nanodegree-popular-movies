@@ -1,6 +1,9 @@
 package com.liebald.popularmovies.utilities;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -121,6 +124,22 @@ public class NetworkUtils {
     public static String getVideosUrl(int movieID) {
         return MOVIE_PREVIEW_BASE_URL + "/" + movieID + "/videos?" + API_KEY_PARAM + "=" +
                 BuildConfig.TMDB_API_KEY;
+    }
+
+    /**
+     * Method that checks whether network is available.
+     *
+     * @return True if a network is available.
+     */
+    // based on https://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager != null) {
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+        return false;
     }
 
     /**

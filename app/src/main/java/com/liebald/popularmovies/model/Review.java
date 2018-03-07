@@ -20,7 +20,7 @@ public class Review {
      */
     private int review_id;
 
-    public Review(String review, String reviewer, int review_id) {
+    public Review(@SuppressWarnings("SameParameterValue") String review, @SuppressWarnings("SameParameterValue") String reviewer, int review_id) {
         this.review = review;
         this.reviewer = reviewer;
         this.review_id = review_id;

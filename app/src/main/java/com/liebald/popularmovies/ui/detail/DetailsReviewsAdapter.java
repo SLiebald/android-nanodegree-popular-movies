@@ -1,6 +1,7 @@
 package com.liebald.popularmovies.ui.detail;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,8 +32,9 @@ public class DetailsReviewsAdapter extends RecyclerView.Adapter<DetailsReviewsAd
         reviews = new ArrayList<>();
     }
 
+    @NonNull
     @Override
-    public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.details_review_item, parent, false);
@@ -40,7 +42,7 @@ public class DetailsReviewsAdapter extends RecyclerView.Adapter<DetailsReviewsAd
     }
 
     @Override
-    public void onBindViewHolder(final ReviewViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ReviewViewHolder holder, int position) {
         Review review = reviews.get(position);
         holder.review.setText(review.getReview());
         holder.reviewer.setText(review.getReviewer());

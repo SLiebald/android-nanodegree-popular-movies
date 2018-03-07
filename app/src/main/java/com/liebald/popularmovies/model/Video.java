@@ -16,6 +16,7 @@ public class Video {
     private String name;
 
 
+    @SuppressWarnings("SameParameterValue")
     public Video(String key, String name) {
         this.key = key;
         this.name = name;

@@ -7,7 +7,7 @@ import android.graphics.BitmapFactory;
 import java.io.ByteArrayOutputStream;
 
 /**
- * Helper class to convert bitmaps to byte arrays for storate as blobs in the database.
+ * Helper class to convert bitmaps to byte arrays for storage as blobs in the database.
  */
 // Based on https://stackoverflow.com/questions/11790104/how-to-storebitmap-image-and-retrieve-image-from-sqlite-database-in-android
 public class BitmapConverter {

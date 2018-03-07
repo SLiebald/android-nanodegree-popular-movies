@@ -9,6 +9,15 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_warning_no_internet"
+            style="@style/contentStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/warning_trailer_reviews_no_internet"
+            android:visibility="gone" />
+
+        <TextView
             android:id="@+id/tv_overview_label"
             style="@style/labelStyle"
             android:layout_width="match_parent"
@@ -20,8 +29,8 @@
             style="@style/contentStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginBottom="@dimen/details_overview_margin_bottom"
+            android:layout_marginStart="@dimen/details_overview_margin_start"
             tools:text="Lorum Ipsum etc." />
 
 
@@ -31,15 +40,11 @@
             android:layout_height="wrap_content"
             app:tabMode="fixed" />
 
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager_details"
-                android:layout_width="match_parent"
-                android:layout_height="400dp" />
-        </FrameLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_details"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/viewpager_trailer_reviews_height" />
     </LinearLayout>
 
 </layout>

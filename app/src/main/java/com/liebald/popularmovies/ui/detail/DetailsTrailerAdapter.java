@@ -1,6 +1,7 @@
 package com.liebald.popularmovies.ui.detail;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
@@ -46,8 +47,9 @@ public class DetailsTrailerAdapter extends RecyclerView.Adapter<DetailsTrailerAd
         videos = new ArrayList<>();
     }
 
+    @NonNull
     @Override
-    public TrailerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TrailerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.details_video_item, parent, false);
@@ -55,7 +57,7 @@ public class DetailsTrailerAdapter extends RecyclerView.Adapter<DetailsTrailerAd
     }
 
     @Override
-    public void onBindViewHolder(final TrailerViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final TrailerViewHolder holder, int position) {
         Video video = videos.get(position);
         holder.title.setText(video.getName());
         // If no videos are available tell it to the user.

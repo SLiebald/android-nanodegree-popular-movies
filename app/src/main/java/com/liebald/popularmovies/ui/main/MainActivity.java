@@ -1,11 +1,8 @@
 package com.liebald.popularmovies.ui.main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
@@ -106,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         diskIoExecutor = AppExecutors.getInstance().diskIO();
 
 
-        if (!isNetworkAvailable()) {
+        if (!NetworkUtils.isNetworkAvailable(this)) {
             loadFavorites();
             Toast.makeText(this, "No Internet available, showing favorites.", Toast.LENGTH_SHORT).show();
         } else {
@@ -131,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         menu_request_type = menu.findItem(R.id.menu_request_type);
+        if (!NetworkUtils.isNetworkAvailable(this))
+            menu_request_type.setTitle(R.string.favorites);
         return true;
     }
 
@@ -138,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // without internet we want to show the favorites.
-        if (!isNetworkAvailable() && (item.getItemId() == R.id.menu_popular || item.getItemId() == R.id.menu_top_rated)) {
+        if (!NetworkUtils.isNetworkAvailable(this) && (item.getItemId() == R.id.menu_popular || item.getItemId() == R.id.menu_top_rated)) {
             loadFavorites();
             Toast.makeText(this, "No Internet available, showing favorites.", Toast.LENGTH_SHORT).show();
             return true;
@@ -169,6 +168,9 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         return true;
     }
 
+    /**
+     * Loads and displays the favorites from the database and displays them.
+     */
     private void loadFavorites() {
         diskIoExecutor.execute(() -> {
             Cursor cursor = getContentResolver().query(MovieContract.MovieEntry.CONTENT_URI,
@@ -187,13 +189,15 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
                     preview.setVote_average(cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_RATING)));
                     preview.setTitle(cursor.getString(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_TITLE)));
 
-                    preview.setImage_thumbail(BitmapConverter.getImage(cursor.getBlob(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_THUMBNAIL))));
+                    preview.setImage_thumbnail(BitmapConverter.getImage(cursor.getBlob(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_THUMBNAIL))));
                     previews.add(preview);
-                    Log.d(TAG, "" + preview.getImage_thumbail());
+                    Log.d(TAG, "" + preview.getImage_thumbnail());
                 }
                 cursor.close();
                 runOnUiThread(() -> {
                     mAdapter.swapItems(previews);
+                    mProgressBar.setVisibility(View.GONE);
+                    mPreviewList.setVisibility(View.VISIBLE);
                 });
             }
         });
@@ -220,20 +224,5 @@ public class MainActivity extends AppCompatActivity implements MoviesPreviewAdap
         //TODO: anything to do here?
     }
 
-    /**
-     * Method that checks whether network is available.
-     *
-     * @return True if a network is available.
-     */
-    // based on https://stackoverflow.com/questions/4238921/detect-whether-there-is-an-internet-connection-available-on-android
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager != null) {
-            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-        }
-        return false;
-    }
 
 }

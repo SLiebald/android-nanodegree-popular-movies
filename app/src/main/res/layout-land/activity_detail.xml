@@ -21,14 +21,14 @@
 
         <ScrollView
             android:id="@+id/detail_master"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="8dp">
+                android:padding="@dimen/details_text_padding">
 
                 <TextView
                     android:id="@+id/tv_vote_average_label"
@@ -72,12 +72,14 @@
                 <include
                     android:id="@+id/detail_info"
                     layout="@layout/detail_info"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/details_landscape_text_details_margin_top"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_vote_average_text" />
+
+
             </android.support.constraint.ConstraintLayout>
         </ScrollView>
     </LinearLayout>

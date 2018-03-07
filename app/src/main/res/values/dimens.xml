@@ -3,4 +3,24 @@
     <dimen name="cardViewCornerRadius">4dp</dimen>
     <dimen name="cardViewElevation">2dp</dimen>
     <dimen name="margin_bottom_action_bar">66dp</dimen>
+    <dimen name="reviews_general_padding">8dp</dimen>
+    <dimen name="reviews_content_margin_top">8dp</dimen>
+    <dimen name="reviews_content_margin_start">4dp</dimen>
+    <dimen name="movie_preview_title_padding">4dp</dimen>
+    <dimen name="trailer_title_margin_top">4dp</dimen>
+    <dimen name="trailer_title_margin_start">8dp</dimen>
+    <dimen name="details_overview_margin_bottom">24dp</dimen>
+    <dimen name="details_overview_margin_start">8dp</dimen>
+    <dimen name="viewpager_trailer_reviews_height">400dp</dimen>
+    <dimen name="details_text_padding">8dp</dimen>
+    <dimen name="details_image_portrait_margin">16dp</dimen>
+    <dimen name="details_portrait_text_margin_start">16dp</dimen>
+    <dimen name="details_portrait_text_margin_top">32dp</dimen>
+    <dimen name="details_landscape_text_details_margin_top">16dp</dimen>
+    <dimen name="details_portrait_text_details_margin">8dp</dimen>
+    <dimen name="about_tmdb_image_height">70dp</dimen>
+    <dimen name="about_tmdb_image_margin">24dp</dimen>
+    <dimen name="about_tmdb_text_margin_end">8dp</dimen>
+    <dimen name="about_tmdb_text_margin_start">8dp</dimen>
+    <dimen name="about_tmdb_text_margin_top">20dp</dimen>
 </resources>

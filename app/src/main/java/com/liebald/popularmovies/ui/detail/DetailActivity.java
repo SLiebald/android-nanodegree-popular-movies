@@ -6,7 +6,6 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.liebald.popularmovies.R;
 import com.liebald.popularmovies.data.MovieContract;
@@ -22,6 +22,7 @@ import com.liebald.popularmovies.databinding.ActivityDetailBinding;
 import com.liebald.popularmovies.model.MoviePreview;
 import com.liebald.popularmovies.utilities.AppExecutors;
 import com.liebald.popularmovies.utilities.BitmapConverter;
+import com.liebald.popularmovies.utilities.NetworkUtils;
 
 import java.util.concurrent.Executor;
 
@@ -38,7 +39,7 @@ public class DetailActivity extends AppCompatActivity {
     /**
      * The {@link MoviePreview} displayed in the current detail screen.
      */
-    MoviePreview preview;
+    private MoviePreview preview;
     /**
      * The data binding for the UI.
      */
@@ -61,17 +62,25 @@ public class DetailActivity extends AppCompatActivity {
                 return;
             }
         } else return;
-        // Setup the viewpager
-        DetailsFragmentPagerAdapter detailsFragmentPagerAdapter = new DetailsFragmentPagerAdapter(this, getSupportFragmentManager(), preview.getMovie_id());
-        ViewPager viewPager = binding.detailInfo.viewpagerDetails;
-        viewPager.setAdapter(detailsFragmentPagerAdapter);
-        TabLayout tabLayout = binding.detailInfo.tabsDetails;
-        tabLayout.setupWithViewPager(binding.detailInfo.viewpagerDetails);
-        setTitle(preview.getTitle());
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            // Setup the viewpager
+            DetailsFragmentPagerAdapter detailsFragmentPagerAdapter = new DetailsFragmentPagerAdapter(this, getSupportFragmentManager(), preview.getMovie_id());
+            ViewPager viewPager = binding.detailInfo.viewpagerDetails;
+            viewPager.setAdapter(detailsFragmentPagerAdapter);
+            TabLayout tabLayout = binding.detailInfo.tabsDetails;
+            tabLayout.setupWithViewPager(binding.detailInfo.viewpagerDetails);
+            setTitle(preview.getTitle());
+        } else {
+            binding.detailInfo.tabsDetails.setVisibility(View.GONE);
+            binding.detailInfo.viewpagerDetails.setVisibility(View.GONE);
+            binding.detailInfo.tvWarningNoInternet.setVisibility(View.VISIBLE);
+        }
 
         fillLayout(preview);
         Log.d(TAG, "Detailed Preview filled");
-        diskIoExecutor = AppExecutors.getInstance().diskIO();
+        diskIoExecutor = AppExecutors.getInstance().
+
+                diskIO();
         binding.detailMaster.requestFocus();
 
     }
@@ -89,8 +98,8 @@ public class DetailActivity extends AppCompatActivity {
             binding.tvReleaseDateText.setText(preview.getRelease_date());
         if (preview.getVote_average() != null && !preview.getVote_average().isEmpty())
             binding.tvVoteAverageText.setText(getString(R.string.detail_rating, preview.getVote_average()));
-        if (preview.getImage_thumbail() != null) {
-            binding.imagePreview.setImageBitmap(preview.getImage_thumbail());
+        if (preview.getImage_thumbnail() != null) {
+            binding.imagePreview.setImageBitmap(preview.getImage_thumbnail());
         }
     }
 
@@ -196,27 +205,25 @@ public class DetailActivity extends AppCompatActivity {
 
     /**
      * Updates the Background color of the activity depending on the bitmap image of the
-     * preview poster.
+     * preview poster. Currently not used since I wasn't convinced by the style.
      */
     // inspired by https://stackoverflow.com/questions/25673021/changing-the-background-of-a-view-to-match-the-color-of-the-album-art
+    @SuppressWarnings("unused")
     private void updateBackground() {
         Bitmap bitmap = ((BitmapDrawable) binding.imagePreview.getDrawable()).getBitmap();
-        Palette.from(bitmap).generate(new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(@NonNull Palette palette) {
-                Palette.Swatch swatch = palette.getVibrantSwatch();
-                if (swatch == null) swatch = palette.getMutedSwatch();
-                if (swatch != null) {
-                    binding.detailMaster.setBackgroundColor(swatch.getRgb());
-                    binding.detailInfo.tvOverviewLabel.setTextColor(swatch.getTitleTextColor());
-                    binding.detailInfo.tvOverviewText.setTextColor(swatch.getBodyTextColor());
-                    binding.tvReleaseDateLabel.setTextColor(swatch.getTitleTextColor());
-                    binding.tvReleaseDateText.setTextColor(swatch.getBodyTextColor());
-                    binding.tvVoteAverageLabel.setTextColor(swatch.getTitleTextColor());
-                    binding.tvVoteAverageText.setTextColor(swatch.getBodyTextColor());
-                }
-
+        Palette.from(bitmap).generate(palette -> {
+            Palette.Swatch swatch = palette.getVibrantSwatch();
+            if (swatch == null) swatch = palette.getMutedSwatch();
+            if (swatch != null) {
+                binding.detailMaster.setBackgroundColor(swatch.getRgb());
+                binding.detailInfo.tvOverviewLabel.setTextColor(swatch.getTitleTextColor());
+                binding.detailInfo.tvOverviewText.setTextColor(swatch.getBodyTextColor());
+                binding.tvReleaseDateLabel.setTextColor(swatch.getTitleTextColor());
+                binding.tvReleaseDateText.setTextColor(swatch.getBodyTextColor());
+                binding.tvVoteAverageLabel.setTextColor(swatch.getTitleTextColor());
+                binding.tvVoteAverageText.setTextColor(swatch.getBodyTextColor());
             }
+
         });
     }
 }
