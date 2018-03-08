@@ -35,7 +35,6 @@ class MovieDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_MOVIES_TABLE =
 
                 "CREATE TABLE " + MovieEntry.TABLE_NAME + " (" +
-
                         // The movie ID should be unique and can be used as primary key.
                         MovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         MovieEntry.COLUMN_MOVIE_ID + " INTEGER NOT NULL, " +

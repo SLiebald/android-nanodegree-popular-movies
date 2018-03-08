@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
+/**
+ * Main activity for the app, displaying a list of movies depending on the users preferences.
+ */
 public class MainActivity extends AppCompatActivity implements MoviesPreviewAdapter.GridItemClickListener,
         LoaderManager.LoaderCallbacks<List<MoviePreview>> {
 

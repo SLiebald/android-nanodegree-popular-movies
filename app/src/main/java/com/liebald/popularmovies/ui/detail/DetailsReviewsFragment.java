@@ -22,7 +22,7 @@ import com.liebald.popularmovies.utilities.VolleyRequests;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} for displaying the Reviews for a movie.
  */
 public class DetailsReviewsFragment extends Fragment {
 
@@ -30,6 +30,10 @@ public class DetailsReviewsFragment extends Fragment {
      * Tag for Logging in this activity.
      */
     private static final String TAG = DetailsReviewsFragment.class.getSimpleName();
+
+    /**
+     * The adapter for filling the fragments recyclerView.
+     */
     private DetailsReviewsAdapter mReviewsAdapter;
 
     public DetailsReviewsFragment() {
@@ -65,6 +69,7 @@ public class DetailsReviewsFragment extends Fragment {
         if (bundle != null)
             movieID = bundle.getInt(MoviePreview.MOVIE_ID_KEY);
 
+        // use volley to request the reviews
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, NetworkUtils.getReviewsUrl(movieID), null, response -> {
                     mReviewsAdapter.swapItems(JsonUtils.parseMovieReviews(response));

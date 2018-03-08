@@ -16,6 +16,12 @@ public class Video {
     private String name;
 
 
+    /**
+     * Constructor of a video trailer that takes its youtube key and its name.
+     *
+     * @param key  Key of the video on youtube.
+     * @param name Name of the video.
+     */
     @SuppressWarnings("SameParameterValue")
     public Video(String key, String name) {
         this.key = key;

@@ -90,7 +90,6 @@ public class DetailActivity extends AppCompatActivity {
      *
      * @param preview The Details for the {@link MoviePreview}
      */
-
     private void fillLayout(MoviePreview preview) {
         if (preview.getOverview() != null && !preview.getOverview().isEmpty())
             binding.detailInfo.tvOverviewText.setText(preview.getOverview());

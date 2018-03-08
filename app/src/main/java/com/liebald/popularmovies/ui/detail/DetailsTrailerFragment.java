@@ -32,6 +32,10 @@ public class DetailsTrailerFragment extends Fragment implements DetailsTrailerAd
      * Tag for Logging in this activity.
      */
     private static final String TAG = DetailsTrailerFragment.class.getSimpleName();
+
+    /**
+     * The adapter for the recyclerView.
+     */
     private DetailsTrailerAdapter mTrailerAdapter;
 
     public DetailsTrailerFragment() {
@@ -67,6 +71,7 @@ public class DetailsTrailerFragment extends Fragment implements DetailsTrailerAd
         if (bundle != null)
             movieID = bundle.getInt(MoviePreview.MOVIE_ID_KEY);
 
+        // use volley to request the trailers
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, NetworkUtils.getVideosUrl(movieID), null, response -> {
                     mTrailerAdapter.swapItems(JsonUtils.parseMovieVideos(response));

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapter for the Trailer of a movie.
+ * Adapter for the Trailers of a movie.
  */
 public class DetailsTrailerAdapter extends RecyclerView.Adapter<DetailsTrailerAdapter.TrailerViewHolder> {
 

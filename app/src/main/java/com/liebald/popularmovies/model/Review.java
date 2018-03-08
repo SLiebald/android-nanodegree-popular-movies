@@ -20,6 +20,13 @@ public class Review {
      */
     private int review_id;
 
+    /**
+     * Constructor for a Review that takes a review, a reviewer and the reviewers ID.
+     *
+     * @param review    The Review text.
+     * @param reviewer  The author.
+     * @param review_id The review ID.
+     */
     public Review(@SuppressWarnings("SameParameterValue") String review, @SuppressWarnings("SameParameterValue") String reviewer, int review_id) {
         this.review = review;
         this.reviewer = reviewer;
